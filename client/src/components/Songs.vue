@@ -37,7 +37,7 @@
                 @click="navigateTo({
                   name: 'song', 
                   params: {
-                    songID: song.id
+                    songId: song.id
                   }
                 })">
                 View
@@ -48,9 +48,6 @@
               <img class="alblum-image" :src="song.alblumImageUrl" />
             </v-flex>
           </v-layout>
-          {{song.title}} -
-          {{song.artist}} -
-          {{song.alblum}}
         </div>
       </panel>
     </v-flex>
