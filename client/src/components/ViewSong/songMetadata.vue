@@ -1,5 +1,5 @@
 <template>
-  <panel title="Song Metadata">
+  <panel title="Song Metadata" class="song-metadata">
     <v-layout>
       <v-flex xs6>
         <div class="song-title">
@@ -36,11 +36,7 @@
 </template>
 
 <script>
-import Panel from '@/components/Panel'
 export default {
-  components: {
-    Panel
-  },
   methods: {
     navigateTo (route) {
       this.$router.push(route)
@@ -78,14 +74,8 @@ export default {
   margin: 0 auto;
 }
 
-textarea {
-  width: 100%;
-  font-family: monospace;
-  border: none;
-  height: 600px;
-  border-style: none;
-  border-color: transparent;
-  overflow: auto;
-  padding-top: 20px;
+.song-metadata {
+  height: 400px;
 }
+
 </style>
