@@ -15,14 +15,32 @@
         <v-btn
           dark
           class="cyan"
-          @click="navigateTo({
+          :to="({
             name: 'song-edit',
-            params: {
-              songId: song.id
+            params () {
+              return {
+                songId: song.id
               }
+            }
           })">
           Edit
-        </v-btn>         
+        </v-btn>
+
+        <v-btn
+          v-if="isUserLoggedIn && !bookmark"
+          dark
+          class="cyan"
+          @click="setAsBookmark">
+          Set as Bookmark
+        </v-btn>
+
+        <v-btn
+          v-if="isUserLoggedIn && bookmark"
+          dark
+          class="cyan"
+          @click="unsetAsBookmark">
+          Unset as bookmark
+        </v-btn>
               
       </v-flex>
 
@@ -36,17 +54,58 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import BookmarksService from '@/services/BookmarksService'
 export default {
-  methods: {
-    navigateTo (route) {
-      this.$router.push(route)
-    },
-    test (data) {
-    }
-  },
   props: [
     'song'
-  ]
+  ],
+  data () {
+    return {
+      bookmark: null
+    }
+  },
+  watch: {
+    async song () {
+      if (!this.isUserLoggedIn) {
+        return
+      }
+
+      try {
+        this.bookmark = (await BookmarksService.index({
+          songId: this.song.id,
+          userId: this.$store.state.user.id
+        })).data
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  },
+  computed: {
+    ...mapState([
+      'isUserLoggedIn'
+    ])
+  },
+  methods: {
+    async setAsBookmark () {
+      try {
+       this.bookmark =  (await BookmarksService.post({
+          songId: this.song.id,
+          userId: this.$store.state.user.id
+        })).data
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async unsetAsBookmark () {
+      try {
+        await BookmarksService.delete(this.bookmark.id)
+        this.bookmark = null
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  }
 }
 </script>
 

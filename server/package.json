@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run lint && node node_modules/nodemon/bin/nodemon.js src/app.js",
-    "lint": "eslint **/*.js"
+    "lint": "eslint **/*.js",
+    "seed": "node ./seed"
   },
   "keywords": [],
   "author": "",
