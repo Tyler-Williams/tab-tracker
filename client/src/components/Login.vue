@@ -9,6 +9,7 @@
         ></v-text-field>
         <br>
         <v-text-field
+          @keyup.enter="login"
           label="Password"
           type="password"
           v-model="password"
